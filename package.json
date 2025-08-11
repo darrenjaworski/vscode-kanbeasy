@@ -2,9 +2,16 @@
   "name": "kanbeasy",
   "displayName": "kanbeasy",
   "description": "A minimal kanban board within VS Code",
+  "publisher": "darrenjaworski",``
   "version": "0.0.1",
+  "icon": "",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.103.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darrenjaworski/vscode-kanbeasy.git"
   },
   "categories": [
     "Other"

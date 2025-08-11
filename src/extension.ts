@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       const panel = vscode.window.createWebviewPanel(
         "kanbeasyBoard",
-        "Kanbeasy Board",
+        "kanbeasy",
         vscode.ViewColumn.One,
         {
           enableScripts: true,
@@ -29,7 +29,7 @@ function getWebviewContent(): string {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanbeasy Board</title>
+    <title>kanbeasy</title>
 </head>
 <body style="margin:0;padding:0;overflow:hidden;height:100vh;width:100vw;">
     <iframe src="https://darrenjaworski.github.io/kanbeasy/" style="border:none;width:100vw;height:100vh;"></iframe>
