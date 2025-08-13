@@ -1,10 +1,10 @@
 {
   "name": "kanbeasy",
-  "displayName": "kanbeasy",
-  "description": "A minimal kanban board within VS Code",
+  "displayName": "Kanbeasy",
+  "description": "A minimal, easy kanban board within VS Code. Orgranize your tasks effortlessly.",
   "publisher": "darrenjaworski",
-  "version": "0.0.1",
-  "icon": "",
+  "version": "1.0.0",
+  "icon": "icon.png",
   "license": "MIT",
   "engines": {
     "vscode": "^1.103.0"
@@ -17,7 +17,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {

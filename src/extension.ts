@@ -5,10 +5,15 @@ import * as vscode from "vscode";
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  let kanbanPanel: vscode.WebviewPanel | undefined;
   const disposable = vscode.commands.registerCommand(
     "kanbeasy.openBoard",
     () => {
-      const panel = vscode.window.createWebviewPanel(
+      if (kanbanPanel) {
+        kanbanPanel.reveal(vscode.ViewColumn.One);
+        return;
+      }
+      kanbanPanel = vscode.window.createWebviewPanel(
         "kanbeasyBoard",
         "kanbeasy",
         vscode.ViewColumn.One,
@@ -17,10 +22,28 @@ export function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         }
       );
-      panel.webview.html = getWebviewContent();
+      kanbanPanel.webview.html = getWebviewContent();
+      kanbanPanel.onDidDispose(
+        () => {
+          kanbanPanel = undefined;
+        },
+        null,
+        context.subscriptions
+      );
     }
   );
   context.subscriptions.push(disposable);
+
+  const statusBarItem = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Left,
+    100
+  );
+  // Use a codicon that resembles a kanban board (e.g., 'organization')
+  statusBarItem.text = "$(project)";
+  statusBarItem.tooltip = "Open Kanbeasy";
+  statusBarItem.command = "kanbeasy.openBoard";
+  statusBarItem.show();
+  context.subscriptions.push(statusBarItem);
 }
 
 function getWebviewContent(): string {
