@@ -1,6 +1,6 @@
 # Kanbeasy
 
-<!-- TODO description -->
+A minimal kanban board within VS Code. Kanbeasy is the easiest and simplest way to get work done.
 
 ---
 
@@ -24,9 +24,9 @@ With VS Code open, launch VS Code Quick Open (`Ctrl+P` on Windows/Linux or `Cmd(
 
 ## Features
 
-<!-- TODO features overviews -->
-
 ![Kanbeasy](https://raw.githubusercontent.com/darrenjaworski/vscode-kanbeasy/refs/heads/main/kanbeasy-preview.png)
+
+Kanban is the simplest posible methodology for organizing your work. This extension is an ultra simple kanban board for all your tasks. Define your own columns and cards. Drag and drop cards between columns. Easily manage all your ongoing work from within VS Code.
 
 ## Requirements
 

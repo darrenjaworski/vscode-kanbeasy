@@ -1,7 +1,7 @@
 {
   "name": "kanbeasy",
   "displayName": "Kanbeasy",
-  "description": "A minimal, easy kanban board within VS Code. Orgranize your tasks effortlessly.",
+  "description": "A minimal, easy to use kanban board within VS Code. Orgranize your tasks effortlessly.",
   "publisher": "darrenjaworski",
   "version": "1.0.0",
   "icon": "icon.png",
