@@ -38,13 +38,17 @@ This extension contributes the following settings:
 
 ## Commands
 
-- **Show Poem of the Day** (`kanbeasy.openBoard`):
+- **Show Kanbeasy board** (`kanbeasy.openBoard`):
 
 ## Known Issues
 
 [Please report any bugs or issues on the extension's Github repo.](https://github.com/darrenjaworski/vscode-kanbeasy/issues/new)
 
 ## Release Notes
+
+### 1.0.1
+
+- update docs
 
 ### 1.0.0
 
