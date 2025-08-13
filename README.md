@@ -26,7 +26,7 @@ With VS Code open, launch VS Code Quick Open (`Ctrl+P` on Windows/Linux or `Cmd(
 
 <!-- TODO features overviews -->
 
-![Kanbeasy](https://raw.githubusercontent.com/darrenjaworski/poem-of-the-day/refs/heads/main/kanbeasy-preview.png)
+![Kanbeasy](https://raw.githubusercontent.com/darrenjaworski/vscode-kanbeasy/refs/heads/main/kanbeasy-preview.png)
 
 ## Requirements
 
@@ -47,3 +47,7 @@ This extension contributes the following settings:
 ## Release Notes
 
 ### 1.0.0
+
+- wrapper for kanbeasy
+- status bar icon
+- command to open kanbeasy
