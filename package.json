@@ -3,7 +3,7 @@
   "displayName": "Kanbeasy",
   "description": "A minimal, easy to use kanban board within VS Code. Orgranize your tasks effortlessly.",
   "publisher": "darrenjaworski",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "icon": "icon.png",
   "license": "MIT",
   "engines": {

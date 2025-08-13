@@ -5,8 +5,8 @@ A minimal kanban board within VS Code. Kanbeasy is the easiest and simplest way 
 ---
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/darrenjaworski.kanbeasy?color=blue&logo=visual-studio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
-[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/darrenjaworski.poem-of-the-day?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
-[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/darrenjaworski.poem-of-the-day?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
+[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/darrenjaworski.kanbeasy?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/darrenjaworski.kanbeasy?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
 
 ## Installation
 
@@ -45,6 +45,10 @@ This extension contributes the following settings:
 [Please report any bugs or issues on the extension's Github repo.](https://github.com/darrenjaworski/vscode-kanbeasy/issues/new)
 
 ## Release Notes
+
+### 1.0.2
+
+- update docs
 
 ### 1.0.1
 
