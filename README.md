@@ -28,6 +28,17 @@ With VS Code open, launch VS Code Quick Open (`Ctrl+P` on Windows/Linux or `Cmd(
 
 Kanban is the simplest possible methodology for organizing your work. This extension is an ultra simple kanban board for all your tasks. Define your own columns and cards. Drag and drop cards between columns. Easily manage all your ongoing work from within VS Code.
 
+### Quick Access
+- **Activity bar sidebar icon** - Click the Kanbeasy icon in the activity bar (left sidebar) for instant access
+- **Toggle functionality** - Open and close your kanban board with a single click
+- **Auto-close sidebar** - Sidebar automatically closes when board opens, maximizing your workspace
+- **Status bar integration** - Quick access button in the status bar (bottom of VS Code)
+
+### Seamless Integration
+- Opens in the main editor area for full workspace utilization
+- Retains board state when switching between views
+- Works alongside your code without disrupting your workflow
+
 ## Requirements
 
 This extension has no dependencies.
@@ -38,13 +49,24 @@ This extension contributes the following settings:
 
 ## Commands
 
-- **Show Kanbeasy board** (`kanbeasy.openBoard`):
+- **Toggle Kanbeasy Board** (`kanbeasy.toggleBoard`) - Open or close the kanban board in the main editor area
+- **Open Kanbeasy Board** (`kanbeasy.openBoard`) - Legacy command for opening the board
 
 ## Known Issues
 
 [Please report any bugs or issues on the extension's Github repo.](https://github.com/darrenjaworski/vscode-kanbeasy/issues/new)
 
 ## Release Notes
+
+### 1.1.0
+
+**New Features:**
+- Activity bar sidebar icon for quick access
+- Toggle functionality - open/close board with single click
+- Sidebar automatically closes when board opens
+- Board now opens in main editor area for better workspace utilization
+- Welcome view in sidebar with clear call-to-action
+- Updated status bar icon for visual consistency
 
 ### 1.0.2
 
