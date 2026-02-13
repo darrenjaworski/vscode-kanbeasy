@@ -102,12 +102,35 @@ The project uses VS Code's testing framework (`@vscode/test-electron`):
 
 ## Publishing
 
-To create a new release:
+### Versioning
 
-1. Update version in `package.json`
-2. Update `CHANGELOG.md` with release notes
-3. Run `npm run vsce-package` to create the .vsix file
-4. Publish to VS Code marketplace or distribute the .vsix file
+Follow **Semantic Versioning** (semver: MAJOR.MINOR.PATCH):
+- **MAJOR**: Breaking changes
+- **MINOR**: New features (backwards compatible) - use for `feat` commits
+- **PATCH**: Bug fixes and minor changes - use for `fix` commits
+
+### Release Process
+
+When creating a new release:
+
+1. **Bump version in `package.json`** according to semver:
+   - New feature (feat): Minor bump (1.0.2 → 1.1.0)
+   - Bug fix (fix): Patch bump (1.0.2 → 1.0.3)
+   - Breaking change: Major bump (1.0.2 → 2.0.0)
+
+2. **Update `CHANGELOG.md`**:
+   - Add new version heading with date
+   - List all changes since last release
+   - Categorize by type (Added, Fixed, Changed, etc.)
+
+3. **Update `README.md`**:
+   - Update version badges if applicable
+   - Add new features to Features section
+   - Update screenshots if UI changed
+
+4. **Package the extension**:
+   - Run `npm run vsce-package` to create the .vsix file
+   - Publish to VS Code marketplace or distribute the .vsix file
 
 ## Code Style
 
