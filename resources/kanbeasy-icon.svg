@@ -1,0 +1,11 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Layout icon - flipped vertically -->
+  <!-- Left tall rectangle -->
+  <rect x="3" y="4" width="9" height="16" rx="0.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+
+  <!-- Right top square -->
+  <rect x="15" y="4" width="6" height="6" rx="0.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+
+  <!-- Right bottom square -->
+  <rect x="15" y="14" width="6" height="6" rx="0.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+</svg>
