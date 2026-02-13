@@ -2,20 +2,43 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
+// Empty tree data provider for the sidebar view
+class KanbeasyTreeDataProvider
+  implements vscode.TreeDataProvider<vscode.TreeItem>
+{
+  getTreeItem(element: vscode.TreeItem): vscode.TreeItem {
+    return element;
+  }
+
+  getChildren(): vscode.TreeItem[] {
+    // Return empty array to show the welcome view
+    return [];
+  }
+}
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   let kanbanPanel: vscode.WebviewPanel | undefined;
-  const disposable = vscode.commands.registerCommand(
-    "kanbeasy.openBoard",
+
+  // Register the tree view for the sidebar (empty to show welcome content)
+  const treeDataProvider = new KanbeasyTreeDataProvider();
+  vscode.window.createTreeView("kanbeasyView", {
+    treeDataProvider,
+  });
+
+  // Toggle command - opens in main editor area or closes if already open
+  const toggleCommand = vscode.commands.registerCommand(
+    "kanbeasy.toggleBoard",
     () => {
       if (kanbanPanel) {
-        kanbanPanel.reveal(vscode.ViewColumn.One);
+        kanbanPanel.dispose();
+        kanbanPanel = undefined;
         return;
       }
       kanbanPanel = vscode.window.createWebviewPanel(
         "kanbeasyBoard",
-        "kanbeasy",
+        "Kanbeasy",
         vscode.ViewColumn.One,
         {
           enableScripts: true,
@@ -30,18 +53,29 @@ export function activate(context: vscode.ExtensionContext) {
         null,
         context.subscriptions
       );
+
+      // Close the sidebar after opening the kanban board
+      vscode.commands.executeCommand("workbench.action.closeSidebar");
     }
   );
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(toggleCommand);
+
+  // Legacy command for backwards compatibility
+  const openCommand = vscode.commands.registerCommand(
+    "kanbeasy.openBoard",
+    () => {
+      vscode.commands.executeCommand("kanbeasy.toggleBoard");
+    }
+  );
+  context.subscriptions.push(openCommand);
 
   const statusBarItem = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.Left,
     100
   );
-  // Use a codicon that resembles a kanban board (e.g., 'organization')
-  statusBarItem.text = "$(project)";
-  statusBarItem.tooltip = "Open Kanbeasy";
-  statusBarItem.command = "kanbeasy.openBoard";
+  statusBarItem.text = "$(layout)";
+  statusBarItem.tooltip = "Toggle Kanbeasy Board";
+  statusBarItem.command = "kanbeasy.toggleBoard";
   statusBarItem.show();
   context.subscriptions.push(statusBarItem);
 }

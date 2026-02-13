@@ -21,10 +21,37 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "kanbeasy",
+          "title": "Kanbeasy",
+          "icon": "resources/kanbeasy-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "kanbeasy": [
+        {
+          "id": "kanbeasyView",
+          "name": "Kanban Board"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "kanbeasy.openBoard",
         "title": "Open Kanbeasy Board"
+      },
+      {
+        "command": "kanbeasy.toggleBoard",
+        "title": "Toggle Kanbeasy Board"
+      }
+    ],
+    "viewsWelcome": [
+      {
+        "view": "kanbeasyView",
+        "contents": "Click the button below to open your Kanban Board.\n[Open Kanban Board](command:kanbeasy.toggleBoard)"
       }
     ]
   },
