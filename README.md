@@ -58,6 +58,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 1.2.0
+
+- Status bar item now displays "Kanbeasy" text label instead of layout icon
+
 ### 1.1.2
 
 - Updated documentation with comprehensive installation instructions and feature descriptions

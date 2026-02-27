@@ -4,6 +4,12 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.0] - 2026-02-26
+
+### Changed
+- Status bar item now displays "Kanbeasy" text label instead of layout icon
+- Added commit and release checklists to CLAUDE.md
+
 ## [1.1.2] - 2026-02-26
 
 ### Changed
