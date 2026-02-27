@@ -138,6 +138,22 @@ When creating a new release:
    - Run `npm run vsce-package` to create the .vsix file
    - Publish to VS Code marketplace or distribute the .vsix file
 
+## Checklists
+
+### Before Every Commit
+- [ ] Run `npm run compile` — ensure type checks, linting, and build all pass
+- [ ] Run `npm run test` — ensure all tests pass
+- [ ] Update `CHANGELOG.md` with a summary of changes
+- [ ] Update `README.md` release notes if user-facing changes were made
+- [ ] Use Conventional Commits format for the commit message (see [Git Conventions](#git-conventions))
+
+### Release
+- [ ] Complete all "Before Every Commit" steps above
+- [ ] Bump version in `package.json` according to semver
+- [ ] Commit with message `chore: release vX.Y.Z`
+- [ ] Tag the commit with `vX.Y.Z`
+- [ ] Run `npm run vsce-package` to generate the .vsix file
+
 ## Code Style
 
 ESLint configuration (`eslint.config.mjs`):
@@ -185,4 +201,4 @@ refactor: simplify webview provider implementation
 - The WebView panel ID is `"kanbeasyBoard"`
 - Primary command: `"kanbeasy.toggleBoard"` (legacy: `"kanbeasy.openBoard"`)
 - Activity bar icon: `resources/kanbeasy-icon.svg`
-- Status bar icon uses VS Code's built-in `$(layout)` codicon
+- Status bar item displays "Kanbeasy" text label

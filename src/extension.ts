@@ -73,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.StatusBarAlignment.Left,
     100
   );
-  statusBarItem.text = "$(layout)";
+  statusBarItem.text = "Kanbeasy";
   statusBarItem.tooltip = "Toggle Kanbeasy Board";
   statusBarItem.command = "kanbeasy.toggleBoard";
   statusBarItem.show();
