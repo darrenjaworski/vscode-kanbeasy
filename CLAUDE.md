@@ -12,7 +12,7 @@ This is a **very small codebase** with only 2 source files. Follow these strateg
 
 ### Source Code
 - **Read directly, don't search**: The entire source code is just 2 files:
-  - `src/extension.ts` (~65 lines) - Main extension logic
+  - `src/extension.ts` (~100 lines) - Main extension logic
   - `src/test/extension.test.ts` (~16 lines) - Basic test suite
 - Read these files directly with the Read tool instead of using Glob/Grep to search
 
@@ -62,20 +62,26 @@ npm run vsce-package   # Create .vsix extension package
 The extension follows a simple architecture:
 
 1. **Single Entry Point** (`src/extension.ts`):
-   - `activate()`: Registers the command and creates the status bar item
+   - `activate()`: Registers commands, creates the tree view, and adds the status bar item
    - `deactivate()`: Currently a no-op
 
-2. **WebView Pattern**:
+2. **Activity Bar Sidebar**:
+   - `KanbeasyTreeDataProvider` implements an empty tree view to show a welcome view
+   - The welcome view (defined in `package.json` `viewsWelcome`) has an "Open Kanban Board" button
+   - Sidebar automatically closes when the board opens
+
+3. **WebView Pattern**:
    - Creates a singleton WebViewPanel that displays an iframe
    - The iframe loads the external kanban app from https://darrenjaworski.github.io/kanbeasy/
    - Panel configuration:
      - `enableScripts: true` - Allows JavaScript in the webview
      - `retainContextWhenHidden: true` - Preserves state when panel is hidden
-   - Reuses the same panel instance if it already exists (via `reveal()`)
+   - `kanbeasy.toggleBoard` creates or disposes the panel (toggle behavior)
+   - `kanbeasy.openBoard` is a legacy command that delegates to `toggleBoard`
 
-3. **Status Bar Integration**:
-   - Shows a project icon (`$(project)`) in the status bar
-   - Clicking the icon triggers `kanbeasy.openBoard` command
+4. **Status Bar Integration**:
+   - Shows a layout icon (`$(layout)`) in the status bar
+   - Clicking the icon triggers `kanbeasy.toggleBoard` command
 
 ### Build System
 
@@ -177,5 +183,6 @@ refactor: simplify webview provider implementation
 
 - The extension iframe URL is hardcoded to `https://darrenjaworski.github.io/kanbeasy/`
 - The WebView panel ID is `"kanbeasyBoard"`
-- Command ID is `"kanbeasy.openBoard"`
-- Status bar icon uses VS Code's built-in `$(project)` codicon
+- Primary command: `"kanbeasy.toggleBoard"` (legacy: `"kanbeasy.openBoard"`)
+- Activity bar icon: `resources/kanbeasy-icon.svg`
+- Status bar icon uses VS Code's built-in `$(layout)` codicon

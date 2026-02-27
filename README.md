@@ -58,6 +58,11 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 1.1.1
+
+- New extension icon with purple kanban column design
+- White monochrome activity bar sidebar icon for better theme compatibility
+
 ### 1.1.0
 
 **New Features:**

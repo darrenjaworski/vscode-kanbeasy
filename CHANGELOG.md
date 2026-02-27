@@ -4,6 +4,12 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.1.1] - 2026-02-26
+
+### Changed
+- New extension icon with purple kanban column design
+- Updated activity bar sidebar icon to white monochrome kanban columns for better theme compatibility
+
 ## [1.1.0] - 2026-02-12
 
 ### Added
