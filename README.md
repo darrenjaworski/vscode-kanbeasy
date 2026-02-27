@@ -58,6 +58,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 1.1.2
+
+- Updated documentation with comprehensive installation instructions and feature descriptions
+
 ### 1.1.1
 
 - New extension icon with purple kanban column design

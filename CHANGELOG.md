@@ -4,6 +4,11 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.1.2] - 2026-02-26
+
+### Changed
+- Updated README with comprehensive installation instructions, feature descriptions, and documentation improvements
+
 ## [1.1.1] - 2026-02-26
 
 ### Changed
