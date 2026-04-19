@@ -4,6 +4,11 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.1] - 2026-04-19
+
+### Security
+- Resolved 7 transitive dev-dependency advisories via `npm audit fix` (ajv, brace-expansion, flatted, glob, js-yaml, minimatch, picomatch chains). No runtime changes.
+
 ## [1.2.0] - 2026-02-26
 
 ### Changed

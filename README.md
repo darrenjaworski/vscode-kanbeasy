@@ -58,6 +58,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 1.2.1
+
+- Security: patch transitive dev-dependency advisories (no runtime changes)
+
 ### 1.2.0
 
 - Status bar item now displays "Kanbeasy" text label instead of layout icon
