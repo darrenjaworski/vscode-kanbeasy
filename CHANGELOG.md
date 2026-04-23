@@ -4,6 +4,12 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.2] - 2026-04-22
+
+### Changed
+- Exclude `CLAUDE.md` from the published `.vsix` package
+- Remove unsupported Visual Studio Marketplace badges from README
+
 ## [1.2.1] - 2026-04-19
 
 ### Security

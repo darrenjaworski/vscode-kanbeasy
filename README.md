@@ -2,12 +2,6 @@
 
 A minimal kanban board within VS Code. Kanbeasy is the easiest and simplest way to get work done.
 
----
-
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/darrenjaworski.kanbeasy?color=blue&logo=visual-studio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
-[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/darrenjaworski.kanbeasy?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
-[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/darrenjaworski.kanbeasy?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=darrenjaworski.kanbeasy&WT.mc_id=darrenjaworski)
-
 ## Installation
 
 Install this extension from the [VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=DarrenJaworski.kanbeasy).
@@ -57,6 +51,11 @@ This extension contributes the following settings:
 [Please report any bugs or issues on the extension's Github repo.](https://github.com/darrenjaworski/vscode-kanbeasy/issues/new)
 
 ## Release Notes
+
+### 1.2.2
+
+- Exclude `CLAUDE.md` from the published `.vsix` package
+- Remove unsupported Visual Studio Marketplace badges from README
 
 ### 1.2.1
 
