@@ -4,37 +4,49 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.3] - 2026-05-05
+
+### Changed
+
+- Sync `package-lock.json` with the published version. No runtime changes.
+
 ## [1.2.2] - 2026-04-22
 
 ### Changed
+
 - Exclude `CLAUDE.md` from the published `.vsix` package
 - Remove unsupported Visual Studio Marketplace badges from README
 
 ## [1.2.1] - 2026-04-19
 
 ### Security
+
 - Resolved 7 transitive dev-dependency advisories via `npm audit fix` (ajv, brace-expansion, flatted, glob, js-yaml, minimatch, picomatch chains). No runtime changes.
 
 ## [1.2.0] - 2026-02-26
 
 ### Changed
+
 - Status bar item now displays "Kanbeasy" text label instead of layout icon
 - Added commit and release checklists to CLAUDE.md
 
 ## [1.1.2] - 2026-02-26
 
 ### Changed
+
 - Updated README with comprehensive installation instructions, feature descriptions, and documentation improvements
 
 ## [1.1.1] - 2026-02-26
 
 ### Changed
+
 - New extension icon with purple kanban column design
 - Updated activity bar sidebar icon to white monochrome kanban columns for better theme compatibility
 
 ## [1.1.0] - 2026-02-12
 
 ### Added
+
 - Activity bar sidebar icon for quick access to Kanbeasy
 - Custom layout-style SVG icon matching VS Code's design language
 - Toggle functionality - open/close kanban board with single click
@@ -43,11 +55,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - CLAUDE.md with project guidance and development conventions
 
 ### Changed
+
 - Kanban board now opens in main editor area instead of separate panel
 - Status bar icon updated to layout codicon for visual consistency
 - Improved toggle behavior - close board if already open
 
 ### Maintained
+
 - Backwards compatibility with existing `openBoard` command
 - All existing functionality preserved
 
