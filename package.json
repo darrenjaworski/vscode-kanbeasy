@@ -53,6 +53,12 @@
         "view": "kanbeasyView",
         "contents": "Click the button below to open your Kanban Board.\n[Open Kanban Board](command:kanbeasy.toggleBoard)"
       }
+    ],
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "kanbeasy.mcp",
+        "label": "Kanbeasy Board"
+      }
     ]
   },
   "scripts": {
@@ -67,6 +73,7 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
+    "test:unit": "tsc -p . --outDir out && mocha \"out/test/unit/**/*.test.js\"",
     "test": "vscode-test",
     "vsce-package": "npx vsce package",
     "kitchen-sink": "npm run compile && npm run test && npm run vsce-package"
@@ -74,14 +81,23 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "@types/vscode": "^1.102.0",
+    "@types/vscode": "^1.103.0",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
     "esbuild": "^0.25.8",
     "eslint": "^9.32.0",
+    "mocha": "^11.7.6",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.9.2"
+  },
+  "allowScripts": {
+    "esbuild@0.25.8": true,
+    "fsevents@2.3.3": true
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
   }
 }

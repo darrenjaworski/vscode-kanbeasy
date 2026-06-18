@@ -4,6 +4,12 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [Unreleased]
+
+### Added
+
+- MCP server for GitHub Copilot. The extension now runs an in-process MCP server so Copilot can read and edit your board (cards and columns) whether or not the board panel is open. The extension owns board state (persisted in `globalState`); deleting a card archives it so it can be recovered; an open board updates live in response to Copilot's edits.
+
 ## [1.2.3] - 2026-05-05
 
 ### Changed

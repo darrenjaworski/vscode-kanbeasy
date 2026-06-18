@@ -23,15 +23,58 @@ With VS Code open, launch VS Code Quick Open (`Ctrl+P` on Windows/Linux or `Cmd(
 Kanban is the simplest possible methodology for organizing your work. This extension is an ultra simple kanban board for all your tasks. Define your own columns and cards. Drag and drop cards between columns. Easily manage all your ongoing work from within VS Code.
 
 ### Quick Access
+
 - **Activity bar sidebar icon** - Click the Kanbeasy icon in the activity bar (left sidebar) for instant access
 - **Toggle functionality** - Open and close your kanban board with a single click
 - **Auto-close sidebar** - Sidebar automatically closes when board opens, maximizing your workspace
 - **Status bar integration** - Quick access button in the status bar (bottom of VS Code)
 
 ### Seamless Integration
+
 - Opens in the main editor area for full workspace utilization
 - Retains board state when switching between views
 - Works alongside your code without disrupting your workflow
+
+### Copilot / MCP Integration
+
+Kanbeasy ships an **MCP server** ("Kanbeasy Board") so you can manage your board by talking to GitHub Copilot in plain language — _"add a card to In Progress to fix the login bug"_, _"what's on my board?"_, _"move card 12 to Done"_.
+
+#### Requirements
+
+- **VS Code 1.103+** with the **GitHub Copilot** and **GitHub Copilot Chat** extensions.
+- Copilot Chat used in **Agent mode** (the mode that can call tools).
+
+No setup is needed beyond installing Kanbeasy — VS Code discovers the bundled MCP server automatically.
+
+#### How to use it
+
+1. Open the **Copilot Chat** view and switch the chat mode selector to **Agent**.
+2. Just ask for what you want. Copilot picks the right Kanbeasy tool and, by default, shows you a confirmation before each change.
+3. You **don't** need the board panel open — Copilot can read and edit the board at any time. If the panel _is_ open, changes appear in it live.
+
+The first time Copilot uses the server you may be asked to confirm/trust the "Kanbeasy Board" tools. You can see and manage them via **MCP: List Servers** in the Command Palette.
+
+#### Example prompts
+
+- "Show me everything on my Kanbeasy board."
+- "Add a card titled 'Write release notes' to the To Do column, due 2026-07-01."
+- "Search my cards for anything mentioning 'auth'."
+- "Move card #7 to In Progress."
+- "Rename the 'Done' column to 'Shipped'."
+- "Archive card #3." (then later) "Restore card #3 into To Do."
+
+#### What Copilot can do
+
+- **Read** the board; list and search cards
+- **Add, update, move, archive, and restore** cards
+- **Add, rename, and remove** columns
+
+#### Good to know
+
+- **"Delete" is recoverable.** Deleting a card _archives_ it (use "restore" to bring it back). Removing a column archives its cards first. Copilot is not given the destructive "reset board" / "empty archive" actions.
+- **Cards are referenced by number** (the `#3` shown on each card), so you can say "move card 3" naturally.
+- **The board is global** across all your workspaces and owned by the extension, which is why Copilot can work with it whether or not the panel is open.
+- **You stay in control** — VS Code Agent mode asks you to confirm each edit before it's applied.
 
 ## Requirements
 
@@ -77,6 +120,7 @@ This extension contributes the following settings:
 ### 1.1.0
 
 **New Features:**
+
 - Activity bar sidebar icon for quick access
 - Toggle functionality - open/close board with single click
 - Sidebar automatically closes when board opens
