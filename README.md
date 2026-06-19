@@ -35,54 +35,128 @@ Kanban is the simplest possible methodology for organizing your work. This exten
 - Retains board state when switching between views
 - Works alongside your code without disrupting your workflow
 
-### Copilot / MCP Integration
+---
 
-Kanbeasy ships an **MCP server** ("Kanbeasy Board") so you can manage your board by talking to GitHub Copilot in plain language — _"add a card to In Progress to fix the login bug"_, _"what's on my board?"_, _"move card 12 to Done"_.
+## GitHub Copilot / MCP Integration
 
-#### Requirements
+Kanbeasy ships a built-in **MCP server** ("Kanbeasy Board") so you can manage your board by talking to GitHub Copilot in plain language — no panel required.
 
-- **VS Code 1.103+** with the **GitHub Copilot** and **GitHub Copilot Chat** extensions.
-- Copilot Chat used in **Agent mode** (the mode that can call tools).
+> **Requirements:** VS Code 1.103+, GitHub Copilot, and GitHub Copilot Chat.
 
-No setup is needed beyond installing Kanbeasy — VS Code discovers the bundled MCP server automatically.
+### Enable the Kanbeasy tools
 
-#### How to use it
+1. Open **Copilot Chat** and switch the mode selector to **Agent**.
+2. Click the **tools icon** (looks like a wrench or slider) in the chat input bar to open **Manage Tools**.
+3. Find **Kanbeasy Board** in the list and toggle its tools on.
+4. The first time Copilot calls a tool, VS Code may ask you to confirm. Click **Allow** (or **Allow for this session**).
 
-1. Open the **Copilot Chat** view and switch the chat mode selector to **Agent**.
-2. Just ask for what you want. Copilot picks the right Kanbeasy tool and, by default, shows you a confirmation before each change.
-3. You **don't** need the board panel open — Copilot can read and edit the board at any time. If the panel _is_ open, changes appear in it live.
+That's it — no config files or API keys needed. The server starts automatically when VS Code loads.
 
-The first time Copilot uses the server you may be asked to confirm/trust the "Kanbeasy Board" tools. You can see and manage them via **MCP: List Servers** in the Command Palette.
+> **Tip:** You can verify the server is running via the Command Palette: **MCP: List Servers** → look for "Kanbeasy Board".
 
-#### Example prompts
+### How it works
 
-- "Show me everything on my Kanbeasy board."
-- "Add a card titled 'Write release notes' to the To Do column, due 2026-07-01."
-- "Search my cards for anything mentioning 'auth'."
-- "Move card #7 to In Progress."
-- "Rename the 'Done' column to 'Shipped'."
-- "Archive card #3." (then later) "Restore card #3 into To Do."
+- **Works without the board panel open.** Copilot reads and edits board state stored in the extension (`globalState`), so the panel is never required.
+- **Live sync.** If you _do_ have the board panel open, Copilot's changes appear in it immediately.
+- **"Delete" is always recoverable.** Removing a card archives it — you can ask Copilot to restore it later. Removing a column archives all its cards first.
+- **Cards have numbers.** Every card gets a permanent `#number` (shown on the card). Reference cards by number in your prompts — it's unambiguous and works even after renames.
+- **Board is global.** Your board is shared across all workspaces.
 
-#### What Copilot can do
+### Example prompts
 
-- **Read** the board; list and search cards
-- **Add, update, move, archive, and restore** cards
-- **Add, rename, and remove** columns
+**Reading the board**
 
-#### Good to know
+```
+What's on my board?
+```
 
-- **"Delete" is recoverable.** Deleting a card _archives_ it (use "restore" to bring it back). Removing a column archives its cards first. Copilot is not given the destructive "reset board" / "empty archive" actions.
-- **Cards are referenced by number** (the `#3` shown on each card), so you can say "move card 3" naturally.
-- **The board is global** across all your workspaces and owned by the extension, which is why Copilot can work with it whether or not the panel is open.
-- **You stay in control** — VS Code Agent mode asks you to confirm each edit before it's applied.
+```
+List the cards in my "In Progress" column.
+```
+
+```
+Search my board for anything mentioning "auth".
+```
+
+```
+Show me everything about card #7.
+```
+
+**Adding and editing**
+
+```
+Add a card called "Fix login redirect" to the To Do column.
+```
+
+```
+Add a card "Write release notes" to the To Do column, due 2026-07-01, with description "Cover the MCP feature."
+```
+
+```
+Update card #3 — change the title to "Fix login redirect (OAuth)" and set due date to 2026-06-30.
+```
+
+**Moving cards**
+
+```
+Move card #7 to In Progress.
+```
+
+```
+Move card #12 to the top of Done.
+```
+
+**Archiving and restoring**
+
+```
+Archive card #5.
+```
+
+```
+Restore card #5 into the To Do column.
+```
+
+**Managing columns**
+
+```
+Add a "Blocked" column between In Progress and Done.
+```
+
+```
+Rename the "Done" column to "Shipped".
+```
+
+```
+Remove the "Blocked" column. (Its cards will be archived automatically.)
+```
+
+### Available tools
+
+| Tool            | What it does                                                   |
+| --------------- | -------------------------------------------------------------- |
+| `get_board`     | Return the full board — all columns, cards, and archived count |
+| `list_columns`  | List columns with card counts                                  |
+| `list_cards`    | List cards, optionally filtered to one column                  |
+| `get_card`      | Get full detail for a card by number                           |
+| `search_cards`  | Search card titles and descriptions                            |
+| `add_card`      | Create a card (title, description, due date)                   |
+| `update_card`   | Edit a card's title, description, or due date                  |
+| `move_card`     | Move a card to another column, optionally at a position        |
+| `archive_card`  | Archive a card (recoverable)                                   |
+| `restore_card`  | Restore an archived card, optionally into a specific column    |
+| `add_column`    | Add a column, optionally at a position                         |
+| `rename_column` | Rename a column                                                |
+| `remove_column` | Remove a column (archives its cards first)                     |
+
+---
 
 ## Requirements
 
-This extension has no dependencies.
+This extension has no dependencies beyond VS Code itself. The Copilot integration requires the GitHub Copilot and GitHub Copilot Chat extensions (VS Code 1.103+).
 
 ## Extension Settings
 
-This extension contributes the following settings:
+This extension contributes no settings.
 
 ## Commands
 
@@ -94,6 +168,10 @@ This extension contributes the following settings:
 [Please report any bugs or issues on the extension's Github repo.](https://github.com/darrenjaworski/vscode-kanbeasy/issues/new)
 
 ## Release Notes
+
+### 1.3.0
+
+- **Copilot / MCP integration** — Kanbeasy now ships a built-in MCP server ("Kanbeasy Board"). GitHub Copilot in agent mode can read and edit your board in plain language whether or not the board panel is open. Includes 13 tools covering cards (add, update, move, archive, restore, search) and columns (add, rename, remove). All deletes are archival and recoverable.
 
 ### 1.2.2
 
