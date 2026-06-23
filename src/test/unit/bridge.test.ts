@@ -42,9 +42,11 @@ suite("webview bridge", () => {
     const payload = reply!.payload as {
       board: unknown;
       kv: Record<string, unknown>;
+      isFirstRun: boolean;
     };
     assert.ok(payload.board);
     assert.strictEqual(payload.kv["kanbeasy:nextCardNumber"], 1);
+    assert.strictEqual(payload.isFirstRun, true); // ← add this assertion
   });
 
   test("host:saveBoard replaces the store's board", () => {

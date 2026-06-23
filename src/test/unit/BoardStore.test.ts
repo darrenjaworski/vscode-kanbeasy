@@ -160,6 +160,22 @@ suite("BoardStore", () => {
     assert.strictEqual(init.kv["kanbeasy:nextCardNumber"], 2);
   });
 
+  test("getInitPayload includes isFirstRun:true when no board was in globalState", () => {
+    const store = new BoardStore(fakeMemento());
+    const payload = store.getInitPayload();
+    assert.strictEqual(payload.isFirstRun, true);
+  });
+
+  test("getInitPayload includes isFirstRun:false when board already existed in globalState", () => {
+    const mem = fakeMemento();
+    // Pre-populate globalState with a board (simulates pre-existing data)
+    const existingBoard = { columns: [], archive: [] };
+    mem.update("kanbeasy.board", existingBoard);
+    const store = new BoardStore(mem);
+    const payload = store.getInitPayload();
+    assert.strictEqual(payload.isFirstRun, false);
+  });
+
   test("setKv/removeKv persist settings and saveBoard replaces state", () => {
     const store = new BoardStore(fakeMemento());
     store.setKv("kanbeasy:theme", "dark");

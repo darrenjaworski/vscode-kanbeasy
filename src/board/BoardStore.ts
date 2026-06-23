@@ -23,6 +23,7 @@ export interface CardFields {
 export interface InitPayload {
   board: BoardState;
   kv: Record<string, unknown>;
+  isFirstRun: boolean;
 }
 
 type Listener = () => void;
@@ -42,11 +43,13 @@ function createDefaultBoard(): BoardState {
 export class BoardStore {
   private board: BoardState;
   private kv: Record<string, unknown>;
+  private readonly isFirstRun: boolean;
   private readonly listeners = new Set<Listener>();
 
   constructor(private readonly memento: MementoLike) {
-    this.board =
-      memento.get<BoardState>(GLOBAL_BOARD_KEY) ?? createDefaultBoard();
+    const existingBoard = memento.get<BoardState>(GLOBAL_BOARD_KEY);
+    this.isFirstRun = existingBoard === undefined;
+    this.board = existingBoard ?? createDefaultBoard();
     this.kv = memento.get<Record<string, unknown>>(GLOBAL_KV_KEY) ?? {};
     if (this.kv[NEXT_CARD_NUMBER_KEY] === undefined) {
       this.kv[NEXT_CARD_NUMBER_KEY] = 1;
@@ -71,7 +74,7 @@ export class BoardStore {
   }
 
   getInitPayload(): InitPayload {
-    return { board: this.board, kv: this.kv };
+    return { board: this.board, kv: this.kv, isFirstRun: this.isFirstRun };
   }
 
   // --- writes from the webview ---
