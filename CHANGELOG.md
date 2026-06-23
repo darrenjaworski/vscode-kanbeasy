@@ -4,6 +4,12 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.3.1] - 2026-06-22
+
+### Fixed
+
+- Prevent board data wipe when upgrading from v1.2.x to v1.3.0 (issue #3). v1.3.0 moved storage from the web app's IndexedDB to VS Code `globalState` with no migration path. On first open after upgrade the extension now sends `isFirstRun: true` in the `host:init` message; the web app detects this, reads any existing IndexedDB data, and sends it back so the extension can persist it in `globalState`.
+
 ## [1.3.0] - 2026-06-18
 
 ### Added
