@@ -74,6 +74,40 @@ suite("webview bridge", () => {
     assert.strictEqual(store.getKv()["kanbeasy:theme"], undefined);
   });
 
+  test("migration round-trip: isFirstRun:true on fresh store, host:saveBoard persists board, isFirstRun:false on reopen", () => {
+    const mem = fakeMemento();
+    const store = new BoardStore(mem);
+
+    // First open: fresh globalState → isFirstRun:true in host:init
+    const initReply = reduceWebviewMessage(store, wrap("host:ready", {}));
+    assert.ok(initReply);
+    const initPayload = initReply!.payload as {
+      board: unknown;
+      kv: Record<string, unknown>;
+      isFirstRun: boolean;
+    };
+    assert.strictEqual(initPayload.isFirstRun, true);
+
+    // Web app detects isFirstRun, reads IDB, sends migrated board back
+    const migratedBoard = {
+      columns: [
+        { id: "c1", title: "Backlog", cards: [], createdAt: 1, updatedAt: 1 },
+      ],
+      archive: [],
+    };
+    reduceWebviewMessage(
+      store,
+      wrap("host:saveBoard", { state: migratedBoard }),
+    );
+
+    // Extension persisted the migrated board
+    assert.deepStrictEqual(store.getBoard(), migratedBoard);
+
+    // Second open (new BoardStore from same memento): isFirstRun:false — migration won't run again
+    const store2 = new BoardStore(mem);
+    assert.strictEqual(store2.getInitPayload().isFirstRun, false);
+  });
+
   test("boardChangedMessage wraps current state and counter", () => {
     const store = new BoardStore(fakeMemento());
     store.addCard({ columnTitle: "To Do" }, { title: "x" });
