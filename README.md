@@ -169,6 +169,10 @@ This extension contributes no settings.
 
 ## Release Notes
 
+### 1.3.1
+
+- **Bug fix: board data preserved on upgrade** — Upgrading from v1.2.x to v1.3.0 could wipe your board. If you were affected, your data will be automatically restored on first open after installing this update.
+
 ### 1.3.0
 
 - **Copilot / MCP integration** — Kanbeasy now ships a built-in MCP server ("Kanbeasy Board"). GitHub Copilot in agent mode can read and edit your board in plain language whether or not the board panel is open. Includes 13 tools covering cards (add, update, move, archive, restore, search) and columns (add, rename, remove). All deletes are archival and recoverable.
