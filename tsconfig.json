@@ -6,7 +6,11 @@
     "sourceMap": true,
     "rootDir": "src",
     "strict": true /* enable all strict type-checking options */,
-    "skipLibCheck": true /* skip checking 3rd-party .d.ts (MCP SDK ships decls referencing DOM/fetch globals & cross-module type-only imports) */
+    "skipLibCheck": true /* skip checking 3rd-party .d.ts (MCP SDK ships decls referencing DOM/fetch globals & cross-module type-only imports) */,
+    "types": [
+      "node",
+      "mocha"
+    ] /* TS6 no longer auto-includes @types/* globals; must be explicit */
     /* Additional Checks */
     // "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
     // "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
