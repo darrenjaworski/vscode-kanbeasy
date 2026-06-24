@@ -4,6 +4,14 @@ All notable changes to the "kanbeasy" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [Unreleased]
+
+### Changed
+
+- Upgraded ESLint 9 → 10 (v9.x reaches EOL 2026-08-06); bumped `@typescript-eslint` to 8.62.0 for ESLint 10 peer-dep support.
+- Upgraded TypeScript 5 → 6; added explicit `types: ["node", "mocha"]` to `tsconfig.json` (required by TS6's stricter automatic type-inclusion rules).
+- Upgraded `@types/node` 22.x → 26.x, `@types/vscode` → 1.125.0, `esbuild` → 0.28.1, `@vscode/test-cli` → 0.0.15, `@vscode/test-electron` → 3.0.0.
+
 ## [1.3.1] - 2026-06-22
 
 ### Fixed
