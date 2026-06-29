@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Fixed
+
+- Paste, copy, cut, and right-click now work in the board's text fields (issue #20). The webview's `<iframe>` now sets `allow="clipboard-read; clipboard-write"`, delegating clipboard permissions to the cross-origin app frame so the web app's clipboard fallback (which works around VS Code dropping native clipboard shortcuts/context menu in nested iframes) can read and write the clipboard.
+
 ### Changed
 
 - Upgraded ESLint 9 → 10 (v9.x reaches EOL 2026-08-06); bumped `@typescript-eslint` to 8.62.0 for ESLint 10 peer-dep support.

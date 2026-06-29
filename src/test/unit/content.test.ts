@@ -10,6 +10,16 @@ suite("webview content", () => {
     );
   });
 
+  test("iframe delegates clipboard permissions so paste works in the webview", () => {
+    const html = getWebviewContent();
+    assert.ok(
+      /<iframe[^>]*\ballow=("|')[^"']*clipboard-read[^"']*clipboard-write/.test(
+        html,
+      ),
+      "Cross-origin iframes need allow='clipboard-read; clipboard-write' or the app's async Clipboard API (paste/copy fallback) is blocked in the VS Code webview",
+    );
+  });
+
   test("relay script filters messages by kanbeasy source", () => {
     const html = getWebviewContent();
     assert.ok(

@@ -15,7 +15,7 @@ export function getWebviewContent(): string {
   <title>kanbeasy</title>
 </head>
 <body style="margin:0;padding:0;overflow:hidden;height:100vh;width:100vw;">
-  <iframe id="app" src="${APP_URL}" style="border:none;width:100vw;height:100vh;"></iframe>
+  <iframe id="app" src="${APP_URL}" allow="clipboard-read; clipboard-write" style="border:none;width:100vw;height:100vh;"></iframe>
   <script>
     const vscode = acquireVsCodeApi();
     const iframe = document.getElementById('app');
