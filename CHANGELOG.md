@@ -6,12 +6,15 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-06-28
+
 ### Fixed
 
 - Paste, copy, cut, and right-click now work in the board's text fields (issue #20). The webview's `<iframe>` now sets `allow="clipboard-read; clipboard-write"`, delegating clipboard permissions to the cross-origin app frame so the web app's clipboard fallback (which works around VS Code dropping native clipboard shortcuts/context menu in nested iframes) can read and write the clipboard.
 
 ### Changed
 
+- Raised the minimum supported VS Code version to 1.125 (`engines.vscode` `^1.103.0` → `^1.125.0`) to match the upgraded `@types/vscode`. Users on VS Code 1.103–1.124 should update to 1.125+.
 - Upgraded ESLint 9 → 10 (v9.x reaches EOL 2026-08-06); bumped `@typescript-eslint` to 8.62.0 for ESLint 10 peer-dep support.
 - Upgraded TypeScript 5 → 6; added explicit `types: ["node", "mocha"]` to `tsconfig.json` (required by TS6's stricter automatic type-inclusion rules).
 - Upgraded `@types/node` 22.x → 26.x, `@types/vscode` → 1.125.0, `esbuild` → 0.28.1, `@vscode/test-cli` → 0.0.15, `@vscode/test-electron` → 3.0.0.
