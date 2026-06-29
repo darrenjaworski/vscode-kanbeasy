@@ -10,7 +10,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Trimmed the packaged `.vsix` from 44 files to 8 by excluding AI-assistant scaffolding and repo tooling from `.vscodeignore`: `.planning/`, `.claude/`, `.superpowers/`, `.github/`, `.mocharc.json`, and any nested `*.vsix`. Only the runtime bundle, icons, README/CHANGELOG/LICENSE, and `package.json` ship now.
 
-## [1.3.2] - 2026-06-28
+## [1.3.2] - 2026-06-28 - UNPUBLISHED
 
 ### Fixed
 
