@@ -13,4 +13,16 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/.vscode-test.*
+.mocharc.json
+
+# CI / repo tooling — not needed in the published extension
+.github/**
+
+# AI assistant scaffolding — keep out of the packaged extension
 CLAUDE.md
+.claude/**
+.planning/**
+.superpowers/**
+
+# Don't bundle prior packaged builds into a new build
+**/*.vsix
