@@ -178,6 +178,12 @@ The board is the live web app in an iframe, so extension releases and web-app de
 
 ## Release Notes
 
+### 1.4.0
+
+- **Bug fix: copy/cut/paste and right-click work in card text fields** — Clipboard actions in the board are now served by VS Code itself (`vscode.env.clipboard`) through the extension bridge, fixing paste being blocked inside the webview. Requires the web app's matching update; older combinations degrade gracefully instead of breaking.
+- **New setting: `kanbeasy.appUrl`** — Point the board panel at a local build of the web app for development. Leave empty for the published app.
+- Now requires VS Code 1.125+.
+
 ### 1.3.1
 
 - **Bug fix: board data preserved on upgrade** — Upgrading from v1.2.x to v1.3.0 could wipe your board. If you were affected, your data will be automatically restored on first open after installing this update.
