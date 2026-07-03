@@ -10,6 +10,16 @@ export interface BridgeMessage {
   payload?: unknown;
 }
 
+/**
+ * Minimal clipboard surface (matches vscode.env.clipboard). Injected so the
+ * bridge stays testable outside the extension host, and so host:init only
+ * advertises the clipboard capability when an implementation is present.
+ */
+export interface ClipboardLike {
+  readText(): Thenable<string>;
+  writeText(value: string): Thenable<void>;
+}
+
 function wrap(type: string, payload: unknown): BridgeMessage {
   return {
     source: MESSAGE_SOURCE,
@@ -28,19 +38,26 @@ export function boardChangedMessage(store: BoardStore): BridgeMessage {
 
 /**
  * Apply an inbound webview message to the store. Returns a reply message to
- * post back to the webview, or undefined if there's nothing to send.
+ * post back to the webview (possibly async, for clipboard reads), or
+ * undefined if there's nothing to send.
  */
 export function reduceWebviewMessage(
   store: BoardStore,
   message: unknown,
-): BridgeMessage | undefined {
+  clipboard?: ClipboardLike,
+): BridgeMessage | Promise<BridgeMessage | undefined> | undefined {
   const msg = message as BridgeMessage | undefined;
   if (!msg || msg.source !== MESSAGE_SOURCE || typeof msg.type !== "string") {
     return undefined;
   }
   switch (msg.type) {
     case "host:ready":
-      return wrap("host:init", store.getInitPayload());
+      return wrap("host:init", {
+        ...store.getInitPayload(),
+        // The web app only activates its clipboard bridge when the host
+        // advertises this; old app versions ignore the extra field.
+        capabilities: { clipboard: Boolean(clipboard) },
+      });
     case "host:saveBoard":
       store.saveBoard((msg.payload as { state: BoardState }).state);
       return undefined;
@@ -54,6 +71,27 @@ export function reduceWebviewMessage(
       store.removeKv(key);
       return undefined;
     }
+    case "host:clipboard:write": {
+      if (!clipboard) {
+        return undefined;
+      }
+      const { text } = msg.payload as { text: string };
+      if (typeof text === "string") {
+        void clipboard.writeText(text);
+      }
+      return undefined;
+    }
+    case "host:clipboard:read": {
+      if (!clipboard) {
+        return undefined;
+      }
+      const { requestId } = msg.payload as { requestId: string };
+      return Promise.resolve(clipboard.readText()).then(
+        (text) => wrap("host:clipboard:readResult", { requestId, text }),
+        // Reply even on failure so the web app doesn't wait out its timeout.
+        () => wrap("host:clipboard:readResult", { requestId, text: "" }),
+      );
+    }
     default:
       return undefined;
   }
@@ -66,6 +104,7 @@ export function reduceWebviewMessage(
 export function attachBridge(
   webview: vscode.Webview,
   store: BoardStore,
+  clipboard?: ClipboardLike,
 ): { dispose(): void } {
   // A webview-originated mutation (host:saveBoard/kvSet/kvRemove) fires the
   // store's change event synchronously; suppress the echo so we don't push the
@@ -74,9 +113,11 @@ export function attachBridge(
   const sub = webview.onDidReceiveMessage((message) => {
     applyingInbound = true;
     try {
-      const reply = reduceWebviewMessage(store, message);
+      const reply = reduceWebviewMessage(store, message, clipboard);
       if (reply) {
-        void webview.postMessage(reply);
+        void Promise.resolve(reply).then(
+          (resolved) => resolved && webview.postMessage(resolved),
+        );
       }
     } finally {
       applyingInbound = false;

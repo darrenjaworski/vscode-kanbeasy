@@ -20,6 +20,24 @@ suite("webview content", () => {
     );
   });
 
+  test("appUrl override points the iframe at a local dev server, keeping host mode", () => {
+    const html = getWebviewContent("http://localhost:5173/kanbeasy/");
+    assert.ok(
+      html.includes('src="http://localhost:5173/kanbeasy/?host=vscode"'),
+      "Override URL must be used for the iframe with host=vscode appended",
+    );
+  });
+
+  test("empty or malformed appUrl override falls back to the published app", () => {
+    for (const override of ["", "   ", "not a url"]) {
+      const html = getWebviewContent(override);
+      assert.ok(
+        html.includes("https://darrenjaworski.github.io/kanbeasy/?host=vscode"),
+        `Override "${override}" must fall back to the published app URL`,
+      );
+    }
+  });
+
   test("relay script filters messages by kanbeasy source", () => {
     const html = getWebviewContent();
     assert.ok(

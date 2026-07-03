@@ -1,4 +1,25 @@
-const APP_URL = "https://darrenjaworski.github.io/kanbeasy/?host=vscode";
+export const DEFAULT_APP_URL = "https://darrenjaworski.github.io/kanbeasy/";
+
+/**
+ * Resolve the app URL the webview iframe loads. An override (the
+ * `kanbeasy.appUrl` setting) lets you point the extension at a local dev
+ * server (e.g. http://localhost:5173/kanbeasy/) to test the full
+ * extension <-> web app integration before either side is released.
+ * `host=vscode` is always appended so the app boots in host mode.
+ */
+export function resolveAppUrl(override?: string): string {
+  const base = override?.trim() || DEFAULT_APP_URL;
+  try {
+    const url = new URL(base);
+    url.searchParams.set("host", "vscode");
+    return url.toString();
+  } catch {
+    // Malformed override — fall back to the published app.
+    const url = new URL(DEFAULT_APP_URL);
+    url.searchParams.set("host", "vscode");
+    return url.toString();
+  }
+}
 
 /**
  * Webview HTML: embeds the kanbeasy web app in host mode and relays bridge
@@ -6,7 +27,8 @@ const APP_URL = "https://darrenjaworski.github.io/kanbeasy/?host=vscode";
  * The extension host cannot postMessage the iframe directly; this in-page
  * relay bridges acquireVsCodeApi() <-> iframe.contentWindow.
  */
-export function getWebviewContent(): string {
+export function getWebviewContent(appUrlOverride?: string): string {
+  const appUrl = resolveAppUrl(appUrlOverride);
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +37,7 @@ export function getWebviewContent(): string {
   <title>kanbeasy</title>
 </head>
 <body style="margin:0;padding:0;overflow:hidden;height:100vh;width:100vw;">
-  <iframe id="app" src="${APP_URL}" allow="clipboard-read; clipboard-write" style="border:none;width:100vw;height:100vh;"></iframe>
+  <iframe id="app" src="${appUrl}" allow="clipboard-read; clipboard-write" style="border:none;width:100vw;height:100vh;"></iframe>
   <script>
     const vscode = acquireVsCodeApi();
     const iframe = document.getElementById('app');

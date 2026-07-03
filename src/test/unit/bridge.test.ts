@@ -3,6 +3,8 @@ import { BoardStore, type MementoLike } from "../../board/BoardStore";
 import {
   reduceWebviewMessage,
   boardChangedMessage,
+  type BridgeMessage,
+  type ClipboardLike,
 } from "../../webview/bridge";
 import { MESSAGE_SOURCE, PROTOCOL_VERSION } from "../../board/constants";
 
@@ -24,6 +26,29 @@ const wrap = (type: string, payload: unknown) => ({
   payload,
 });
 
+/** Assert the reducer replied synchronously and return the message. */
+function syncReply(
+  reply: ReturnType<typeof reduceWebviewMessage>,
+): BridgeMessage {
+  assert.ok(reply, "expected a reply");
+  assert.ok(!(reply instanceof Promise), "expected a synchronous reply");
+  return reply;
+}
+
+function fakeClipboard(initialText = ""): ClipboardLike & {
+  written: string[];
+} {
+  const written: string[] = [];
+  return {
+    written,
+    readText: () => Promise.resolve(initialText),
+    writeText: (value: string) => {
+      written.push(value);
+      return Promise.resolve();
+    },
+  };
+}
+
 suite("webview bridge", () => {
   test("ignores foreign messages", () => {
     const store = new BoardStore(fakeMemento());
@@ -35,18 +60,91 @@ suite("webview bridge", () => {
 
   test("host:ready returns a host:init with board + kv", () => {
     const store = new BoardStore(fakeMemento());
-    const reply = reduceWebviewMessage(store, wrap("host:ready", {}));
-    assert.ok(reply);
-    assert.strictEqual(reply!.type, "host:init");
-    assert.strictEqual(reply!.source, MESSAGE_SOURCE);
-    const payload = reply!.payload as {
+    const reply = syncReply(
+      reduceWebviewMessage(store, wrap("host:ready", {})),
+    );
+    assert.strictEqual(reply.type, "host:init");
+    assert.strictEqual(reply.source, MESSAGE_SOURCE);
+    const payload = reply.payload as {
       board: unknown;
       kv: Record<string, unknown>;
       isFirstRun: boolean;
+      capabilities: { clipboard: boolean };
     };
     assert.ok(payload.board);
     assert.strictEqual(payload.kv["kanbeasy:nextCardNumber"], 1);
     assert.strictEqual(payload.isFirstRun, true); // ← add this assertion
+    assert.strictEqual(
+      payload.capabilities.clipboard,
+      false,
+      "host:init must not advertise clipboard when no clipboard impl is attached",
+    );
+  });
+
+  test("host:init advertises clipboard capability when a clipboard is attached", () => {
+    const store = new BoardStore(fakeMemento());
+    const reply = syncReply(
+      reduceWebviewMessage(store, wrap("host:ready", {}), fakeClipboard()),
+    );
+    const payload = reply.payload as { capabilities: { clipboard: boolean } };
+    assert.strictEqual(payload.capabilities.clipboard, true);
+  });
+
+  test("host:clipboard:write writes to the host clipboard", () => {
+    const store = new BoardStore(fakeMemento());
+    const clipboard = fakeClipboard();
+    const reply = reduceWebviewMessage(
+      store,
+      wrap("host:clipboard:write", { text: "hello" }),
+      clipboard,
+    );
+    assert.strictEqual(reply, undefined);
+    assert.deepStrictEqual(clipboard.written, ["hello"]);
+  });
+
+  test("host:clipboard:read replies with the clipboard text and requestId", async () => {
+    const store = new BoardStore(fakeMemento());
+    const reply = await reduceWebviewMessage(
+      store,
+      wrap("host:clipboard:read", { requestId: "r1" }),
+      fakeClipboard("pasted text"),
+    );
+    assert.ok(reply);
+    assert.strictEqual(reply!.type, "host:clipboard:readResult");
+    assert.deepStrictEqual(reply!.payload, {
+      requestId: "r1",
+      text: "pasted text",
+    });
+  });
+
+  test("host:clipboard:read replies with empty text when the read fails", async () => {
+    const store = new BoardStore(fakeMemento());
+    const failing: ClipboardLike = {
+      readText: () => Promise.reject(new Error("denied")),
+      writeText: () => Promise.resolve(),
+    };
+    const reply = await reduceWebviewMessage(
+      store,
+      wrap("host:clipboard:read", { requestId: "r2" }),
+      failing,
+    );
+    assert.ok(reply, "must reply even on failure so the app doesn't hang");
+    assert.deepStrictEqual(reply!.payload, { requestId: "r2", text: "" });
+  });
+
+  test("clipboard messages are ignored when no clipboard is attached", () => {
+    const store = new BoardStore(fakeMemento());
+    assert.strictEqual(
+      reduceWebviewMessage(store, wrap("host:clipboard:write", { text: "x" })),
+      undefined,
+    );
+    assert.strictEqual(
+      reduceWebviewMessage(
+        store,
+        wrap("host:clipboard:read", { requestId: "r" }),
+      ),
+      undefined,
+    );
   });
 
   test("host:saveBoard replaces the store's board", () => {
@@ -79,9 +177,10 @@ suite("webview bridge", () => {
     const store = new BoardStore(mem);
 
     // First open: fresh globalState → isFirstRun:true in host:init
-    const initReply = reduceWebviewMessage(store, wrap("host:ready", {}));
-    assert.ok(initReply);
-    const initPayload = initReply!.payload as {
+    const initReply = syncReply(
+      reduceWebviewMessage(store, wrap("host:ready", {})),
+    );
+    const initPayload = initReply.payload as {
       board: unknown;
       kv: Record<string, unknown>;
       isFirstRun: boolean;

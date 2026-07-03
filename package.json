@@ -48,6 +48,16 @@
         "title": "Toggle Kanbeasy Board"
       }
     ],
+    "configuration": {
+      "title": "Kanbeasy",
+      "properties": {
+        "kanbeasy.appUrl": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Override the URL of the kanbeasy web app loaded in the board panel. Leave empty to use the published app. For local development, run `npm run dev` in the kanbeasy repo and set this to `http://localhost:5173/`. Reopen the board after changing."
+        }
+      }
+    },
     "viewsWelcome": [
       {
         "view": "kanbeasyView",

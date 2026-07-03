@@ -6,6 +6,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Fixed
+
+- Copy/cut/paste in the board's text fields is now host-mediated (issue #20, second attempt). The bridge handles `host:clipboard:write` and `host:clipboard:read` messages from the web app using `vscode.env.clipboard`, which needs no browser clipboard permissions — the previous `allow="clipboard-read; clipboard-write"` iframe delegation (unpublished v1.3.2) was not honored inside the VS Code webview. `host:init` now advertises `capabilities: { clipboard: true }` so the web app only activates its clipboard bridge against extension versions that can serve it; old app or extension versions on either side degrade to current behavior instead of breaking.
+
+### Added
+
+- `kanbeasy.appUrl` setting to point the board panel at a local build of the web app (e.g. `http://localhost:5173/kanbeasy/`) for end-to-end testing of extension + web app changes before either is released. Empty or malformed values fall back to the published app; `?host=vscode` is always appended.
+
 ### Changed
 
 - Trimmed the packaged `.vsix` from 44 files to 8 by excluding AI-assistant scaffolding and repo tooling from `.vscodeignore`: `.planning/`, `.claude/`, `.superpowers/`, `.github/`, `.mocharc.json`, and any nested `*.vsix`. Only the runtime bundle, icons, README/CHANGELOG/LICENSE, and `package.json` ship now.

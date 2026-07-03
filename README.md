@@ -156,7 +156,16 @@ This extension has no dependencies beyond VS Code itself. The Copilot integratio
 
 ## Extension Settings
 
-This extension contributes no settings.
+- `kanbeasy.appUrl` — Override the URL of the kanbeasy web app loaded in the board panel. Leave empty (the default) to use the published app. Intended for development: run the [kanbeasy web app](https://github.com/darrenjaworski/kanbeasy) locally with `npm run dev` and set this to `http://localhost:5173/` to test extension + web app changes together before either is released. Reopen the board after changing the value.
+
+### Testing against a local web app
+
+The board is the live web app in an iframe, so extension releases and web-app deploys are coupled. To verify a cross-repo change end to end before shipping either side:
+
+1. In the `kanbeasy` repo: `npm run dev` (serves `http://localhost:5173/`).
+2. In this repo: press `F5` (Run Extension) to launch an Extension Development Host.
+3. In the development host's settings, set `"kanbeasy.appUrl": "http://localhost:5173/"`.
+4. Open the board — the iframe now loads your local web app in host mode (`?host=vscode` is appended automatically).
 
 ## Commands
 

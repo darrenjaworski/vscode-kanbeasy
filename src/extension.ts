@@ -39,8 +39,15 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.ViewColumn.One,
         { enableScripts: true, retainContextWhenHidden: true },
       );
-      kanbanPanel.webview.html = getWebviewContent();
-      activeBridge = attachBridge(kanbanPanel.webview, store);
+      const appUrlOverride = vscode.workspace
+        .getConfiguration("kanbeasy")
+        .get<string>("appUrl");
+      kanbanPanel.webview.html = getWebviewContent(appUrlOverride);
+      activeBridge = attachBridge(
+        kanbanPanel.webview,
+        store,
+        vscode.env.clipboard,
+      );
       kanbanPanel.onDidDispose(
         () => {
           activeBridge?.dispose();

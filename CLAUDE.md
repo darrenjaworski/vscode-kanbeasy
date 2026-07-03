@@ -11,12 +11,14 @@ Kanbeasy is a minimal VS Code extension that provides a kanban board interface d
 This is a **very small codebase** with only 2 source files. Follow these strategies to minimize token usage:
 
 ### Source Code
+
 - **Read directly, don't search**: The entire source code is just 2 files:
   - `src/extension.ts` (~100 lines) - Main extension logic
   - `src/test/extension.test.ts` (~16 lines) - Basic test suite
 - Read these files directly with the Read tool instead of using Glob/Grep to search
 
 ### Configuration Files
+
 - **Key config files** (read directly as needed):
   - `package.json` - Scripts, dependencies, extension metadata
   - `tsconfig.json` - TypeScript configuration
@@ -25,12 +27,14 @@ This is a **very small codebase** with only 2 source files. Follow these strateg
   - `.vscode/launch.json` - Debug configuration
 
 ### Avoid node_modules
+
 - **Never search or glob node_modules** - it contains 300+ packages
 - When using Glob/Grep, always exclude node_modules:
   - Use specific paths like `src/**/*.ts` instead of `**/*.ts`
   - Or use patterns that naturally exclude it like `*.json` in root
 
 ### Search Strategy
+
 - Use specific file paths when you know what you're looking for
 - Example: Read `src/extension.ts` directly instead of globbing for `**/*.ts`
 - The codebase is small enough that reading all source files uses fewer tokens than searching
@@ -102,6 +106,7 @@ The extension follows a simple architecture:
 ## Testing
 
 The project uses VS Code's testing framework (`@vscode/test-electron`):
+
 - Test files located in `src/test/`
 - Run tests with `npm run test`
 - Tests are compiled to `out/` directory before running
@@ -111,6 +116,7 @@ The project uses VS Code's testing framework (`@vscode/test-electron`):
 ### Versioning
 
 Follow **Semantic Versioning** (semver: MAJOR.MINOR.PATCH):
+
 - **MAJOR**: Breaking changes
 - **MINOR**: New features (backwards compatible) - use for `feat` commits
 - **PATCH**: Bug fixes and minor changes - use for `fix` commits
@@ -141,6 +147,7 @@ When creating a new release:
 ## Checklists
 
 ### Before Every Commit
+
 - [ ] Run `npm run compile` — ensure type checks, linting, and build all pass
 - [ ] Run `npm run test` — ensure all tests pass
 - [ ] Update `CHANGELOG.md` with a summary of changes
@@ -148,6 +155,7 @@ When creating a new release:
 - [ ] Use Conventional Commits format for the commit message (see [Git Conventions](#git-conventions))
 
 ### Release
+
 - [ ] Complete all "Before Every Commit" steps above
 - [ ] Bump version in `package.json` according to semver
 - [ ] Commit with message `chore: release vX.Y.Z`
@@ -157,6 +165,7 @@ When creating a new release:
 ## Code Style
 
 ESLint configuration (`eslint.config.mjs`):
+
 - TypeScript-specific rules for naming conventions
 - Requires curly braces for control statements
 - Enforces strict equality (`===`)
@@ -168,6 +177,7 @@ ESLint configuration (`eslint.config.mjs`):
 Use **Conventional Commits** style for all commit messages:
 
 ### Format
+
 ```
 <type>[optional scope]: <description>
 
@@ -177,6 +187,7 @@ Use **Conventional Commits** style for all commit messages:
 ```
 
 ### Common Types
+
 - `feat`: A new feature
 - `fix`: A bug fix
 - `docs`: Documentation only changes
@@ -187,6 +198,7 @@ Use **Conventional Commits** style for all commit messages:
 - `chore`: Changes to build process, dependencies, or tooling
 
 ### Examples
+
 ```
 feat: add sidebar icon to activity bar
 fix: resolve webview panel toggle issue
@@ -197,7 +209,7 @@ refactor: simplify webview provider implementation
 
 ## Key Implementation Details
 
-- The extension iframe URL is hardcoded to `https://darrenjaworski.github.io/kanbeasy/`
+- The extension iframe URL defaults to `https://darrenjaworski.github.io/kanbeasy/` and can be overridden with the `kanbeasy.appUrl` setting (for local dev: `http://localhost:5173/` from the kanbeasy repo's `npm run dev`)
 - The WebView panel ID is `"kanbeasyBoard"`
 - Primary command: `"kanbeasy.toggleBoard"` (legacy: `"kanbeasy.openBoard"`)
 - Activity bar icon: `resources/kanbeasy-icon.svg`
