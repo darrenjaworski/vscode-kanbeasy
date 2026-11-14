@@ -1,5 +1,8 @@
 # Kanbeasy
 
+[![CI](https://github.com/darrenjaworski/vscode-kanbeasy/actions/workflows/ci.yml/badge.svg)](https://github.com/darrenjaworski/vscode-kanbeasy/actions/workflows/ci.yml)
+[![Release](https://github.com/darrenjaworski/vscode-kanbeasy/actions/workflows/release.yml/badge.svg)](https://github.com/darrenjaworski/vscode-kanbeasy/actions/workflows/release.yml)
+
 A minimal kanban board within VS Code. Kanbeasy is the easiest and simplest way to get work done.
 
 ## Installation
