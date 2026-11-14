@@ -6,6 +6,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-11-14
+
+### Changed
+
+- Update dependencies: @modelcontextprotocol/sdk 1.32, zod 4.6, Mocha 12, ESLint 10.15, esbuild 0.28.2.
+- Add a CI workflow that runs checks and packages the `.vsix` on every push; CI and release now run on Node 24 LTS (`.nvmrc`).
+
 ## [1.4.0] - 2026-07-02
 
 ### Fixed

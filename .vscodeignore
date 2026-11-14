@@ -26,3 +26,4 @@ CLAUDE.md
 
 # Don't bundle prior packaged builds into a new build
 **/*.vsix
+.nvmrc

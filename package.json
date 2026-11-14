@@ -3,7 +3,7 @@
   "displayName": "Kanbeasy",
   "description": "A minimal, easy to use kanban board within VS Code. Orgranize your tasks effortlessly.",
   "publisher": "darrenjaworski",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "icon": "icon.png",
   "license": "MIT",
   "engines": {
@@ -85,8 +85,8 @@
     "lint": "eslint src",
     "test:unit": "tsc -p . --outDir out && mocha \"out/test/unit/**/*.test.js\"",
     "test": "vscode-test",
-    "vsce-package": "npx vsce package",
-    "kitchen-sink": "npm run compile && npm run test && npm run vsce-package"
+    "vsce-package": "vsce package",
+    "kitchen-sink": "npm run test:unit && npm run test && npm run vsce-package"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -96,6 +96,7 @@
     "@typescript-eslint/parser": "^8.72.2",
     "@vscode/test-cli": "^0.0.15",
     "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.1.1",
     "esbuild": "^0.28.2",
     "eslint": "^10.15.0",
     "mocha": "^12.0.3",
